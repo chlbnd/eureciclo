@@ -1,10 +1,10 @@
-from Bottle import Bottle
+from bottle import Bottle
 
 class Gallon:
 
     def __init__(self, gallons):
         self.__gallons = gallons
-        self.__liters = gallons
+        self.__liters = [gallons]
 
         if isinstance(gallons, list):
             self.__liters = sum(gallons)
@@ -24,10 +24,16 @@ class Gallon:
     def fill(self, bottles: Bottle):
         liters = self.liters
 
-        if liters >= bottles.larger():
+        if liters in bottles.bottles:
+            dump = bottles.dump(liters)
+            self.__liters -= dump
+
+        if liters > bottles.larger():
             dump = bottles.dump(bottles.larger())
             self.__liters -= dump
 
-        if liters <= bottles.smaller():
+        if liters < bottles.smaller():
             dump = bottles.dump(bottles.smaller())
             self.__liters -= dump
+
+        return dump
