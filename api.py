@@ -16,7 +16,7 @@ def home():
            '<p>{"gallons": [a, b, c],"bottles": [x, y, z]}.</p>'
 
 
-@app.route('/gallon/fill', methods=['POST'])
+@app.route('/gallons/fill', methods=['POST'])
 def fill_gallons():
     json = request.get_json()
 

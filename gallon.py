@@ -36,8 +36,15 @@ class Gallon:
 
         delta = [(value - liters) for idx, value in enumerate(sum_list)]
 
-        surplus = min([value for value in delta if value > 0])
-        lack = min([abs(value) for value in delta if value < 0])
+        try:
+            surplus = min([value for value in delta if value > 0])
+        except:
+            surplus = liters
+
+        try:
+            lack = min([abs(value) for value in delta if value < 0])
+        except:
+            lack = liters
 
         if surplus <= lack:
             idx = delta.index(surplus)
