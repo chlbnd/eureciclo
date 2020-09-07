@@ -11,7 +11,7 @@ class Response:
         return response
 
     def gallons(self):
-        if not self.__gallons:
+        if self.__gallons == [0]:
             return "Como não havia nenhum galão, "
 
         if 1 == len(self.__gallons):
@@ -20,8 +20,8 @@ class Response:
         return f"Galões com a capacidade de {self.__gallons} L foram preenchidos "
 
     def bottles(self):
-        if not self.__bottles:
-            return "nenhuma garrafa foi esvaziada."
+        if not self.__bottles or self.__gallons == [0]:
+            return "nenhuma garrafa foi esvaziada"
 
         if 1 == len(self.__bottles):
             return f"por uma garrafa de {self.__bottles[0]} L"
@@ -31,7 +31,11 @@ class Response:
     def leftover(self):
         leftover = sum(self.__bottles) - sum(self.__gallons)
 
-        if 0 == leftover:
+        if self.__gallons == [0] or leftover == 0:
             return "."
+
+        if 0 > leftover:
+            leftover *= -1
+            return f", mantendo {round(leftover, 2)} L de capacidade livre."
 
         return f" com uma sobra de {leftover} L."
